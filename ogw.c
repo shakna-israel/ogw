@@ -50,6 +50,10 @@ int main(int argc, char* argv[]) {
   fseek(openFile, 0L, SEEK_SET);
 
   char* program = calloc(size + 1, sizeof(char));
+  if(!program) {
+    fprintf(stderr, "OGW ERROR: Unable to allocate space for the program");
+    return 1;
+  }
 
   // Copy in our header...
   for(size_t i = 0; i < evil_h_len; i++) {
