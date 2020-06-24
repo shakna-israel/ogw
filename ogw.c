@@ -11,6 +11,12 @@
   unsigned int evil_h_len
 */
 
+TCCState *s;
+
+// TODO: How the heck do we do these _before_ compiling?
+// tcc_add_library(s, library_name);
+// tcc_add_include_path(s, filename);
+
 int main(int argc, char* argv[]) {
 
   if(argc < 2) {
@@ -24,7 +30,6 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  TCCState *s;
   s = tcc_new();
   if (!s) {
     fprintf(stderr, "OGW ERROR: Could not initialise compiler.\n");
@@ -34,9 +39,11 @@ int main(int argc, char* argv[]) {
   /* MUST BE CALLED before any compilation */
   tcc_set_output_type(s, TCC_OUTPUT_MEMORY);
 
-  // TODO:
-  // Prepend evil_h[] to a string.
-  // Append the user's supplied program to the same string.
+  // Add some handy include paths...
+  tcc_add_include_path(s, "."); // Current folder
+  tcc_add_include_path(s, "include"); // ./include folder
+
+  // Build our program...
 
   // Length of our header, and to newlines for the base size...
   size_t size = evil_h_len + 2;
@@ -66,10 +73,14 @@ int main(int argc, char* argv[]) {
     }
   } while(c != EOF);
 
+  /* Compile the program */
   if (tcc_compile_string(s, program) == -1) {
     fprintf(stderr, "OGW ERROR: Failed to compile program.\n");
     return 1;
   }
+
+  /* TODO: Expose any helpers */
+  //tcc_add_symbol(s, "name", function);
 
   /* relocate the code */
   if (tcc_relocate(s, TCC_RELOCATE_AUTO) < 0) {
