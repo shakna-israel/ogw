@@ -107,6 +107,12 @@ int main(int argc, char* argv[]) {
   size_t path_size = dir_len + 15;
 
   char* libraries_txt_path = calloc(path_size, sizeof(char));
+
+  if(!libraries_txt_path) {
+    fprintf(stderr, "OGW ERROR: Unable to allocate space for libraries.txt path.");
+    return 1;
+  }
+
   for(size_t i = 0; i < dir_len; i++) {
     libraries_txt_path[i] = dir[i];
   }
