@@ -18,16 +18,6 @@ Expanding on the absolute terrible idea, this program, which can be shortened to
 
 ## Differences
 
-A few features of CNoEvil aren't part of `ogw`:
-
-* Lambdas. These work by abusing a C-extension that wasn't implemented in `libtcc`.
-
-	* We may reimplement this eventually, as we have access to a compiler runtime.
-
-* Klasses. These work by using a C-extension that wasn't implemented in `libtcc`.
-
-	* We will probably reimplement this using a differing syntax.
-
 Usually when using CNoEvil you need to make a series of defines first, to choose what modules you'll enable/disable.
 
 However, `ogw` sets these defines:
