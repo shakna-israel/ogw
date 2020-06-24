@@ -13,6 +13,11 @@
   unsigned int evil_h_len
 */
 
+#include <MT19937.h>
+/*
+  Supplies our random functions...
+*/
+
 TCCState *s;
 
 int main(int argc, char* argv[]) {
@@ -148,6 +153,13 @@ int main(int argc, char* argv[]) {
 
   /* TODO: Expose any helpers */
   //tcc_add_symbol(s, "name", function);
+  tcc_add_symbol(s, "randomseed", init_genrand);
+  tcc_add_symbol(s, "randomint", genrand_int32);
+  tcc_add_symbol(s, "randomint_31", genrand_int31);
+  tcc_add_symbol(s, "randomreal", genrand_real1);
+  tcc_add_symbol(s, "randomreal_2", genrand_real2);
+  tcc_add_symbol(s, "randomreal_3", genrand_real2);
+  tcc_add_symbol(s, "randomreal_53", genrand_res53);
 
   /* relocate the code */
   if (tcc_relocate(s, TCC_RELOCATE_AUTO) < 0) {

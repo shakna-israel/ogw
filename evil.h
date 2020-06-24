@@ -68,7 +68,27 @@ Redistribution and use in source and binary forms, with or without modification,
 #define EVIL_HELP
 #define EVIL_LOG
 #define EVIL_MATH
-#define EVIL_RANDOM
+
+/* initializes mt[N] with a seed */
+void randomseed(unsigned long s);
+
+/* generates a random number on [0,0xffffffff]-interval */
+unsigned long randomint(void);
+
+/* generates a random number on [0,0x7fffffff]-interval */
+long randomint_31(void);
+
+/* generates a random number on [0,1]-real-interval */
+double randomreal(void);
+
+/* generates a random number on [0,1)-real-interval */
+double randomreal_2(void);
+
+/* generates a random number on (0,1)-real-interval */
+double randomreal_3(void);
+
+/* generates a random number on [0,1) with 53-bit resolution*/
+double randomreal_53(void);
 
 #ifdef EVIL_ASSERT
 

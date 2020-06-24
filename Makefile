@@ -3,4 +3,4 @@ COPTIM=-O3
 
 all:
 	xxd -i evil.h > evil_build.h
-	$(CC) $(COPTIM) $(CFLAGS) ogw.c -I. -ltcc -ldl -o ogw
+	$(CC) $(COPTIM) $(CFLAGS) MT19937.c ogw.c -I. -ltcc -ldl -o ogw

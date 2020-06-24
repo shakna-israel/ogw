@@ -1,0 +1,8 @@
+comment("This demonstrates our Mersenne Twister for random numbers.");
+
+#include <time.h>
+
+Main then
+	randomseed(time(0));
+	printf("%zu\n", randomint());
+end
