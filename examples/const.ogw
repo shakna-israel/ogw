@@ -1,0 +1,10 @@
+comment("CNoEvil has a declarative way of creating \
+	constants and storage-class specifiers.");
+
+constant(int, x, 12);
+storage(int, y, 2);
+
+Main then
+  displayln(x);
+  displayln(y);
+end

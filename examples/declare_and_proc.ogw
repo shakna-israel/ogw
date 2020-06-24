@@ -1,0 +1,11 @@
+comment("This is a function declerations.");
+declare(add2, int, int a);
+
+comment("This is that same function, but defined.");
+proc(add2, int, int a)
+  return a + 2;
+end
+
+Main then
+  displayln(add2(2));
+end

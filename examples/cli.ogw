@@ -1,0 +1,8 @@
+comment("We have a bunch of ANSI escapes for controlling the console available.");
+
+Main then
+  cli_fg_magenta();
+  cli_bg_white();
+  displayln("Coloured text!");
+  cli_reset();
+end

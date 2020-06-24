@@ -1,0 +1,15 @@
+comment("This demonstrates an assertion, with a message.");
+
+/*
+  Running it produces something like:
+
+  Assertion `x < 0` failed: "This should always trigger."
+  examples/assert.c @ line 17
+  in `main`
+
+*/
+
+Main then
+  int x = 1;
+  AssertMsg(x < 0, "This should always trigger.");
+end

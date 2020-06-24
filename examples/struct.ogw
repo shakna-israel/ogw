@@ -1,0 +1,22 @@
+comment("This is a demonstration of \
+	creating a struct.");
+
+comment("Carefully note that it is still \
+	followed by a semicolon.");
+
+Struct(Pair)
+  int a;
+  int b;
+end;
+
+comment("You can typedef and create at the same time, \
+ like C, but this is clearer.");
+
+Typedef
+  struct Pair
+  Pair;
+
+Main then
+  Pair x = {1, 2};
+  displayln(x.a);
+end

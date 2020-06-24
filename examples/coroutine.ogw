@@ -1,0 +1,20 @@
+comment("A demonstration of a coroutine.");
+
+declare(example, int);
+
+proc(example, int)
+  static int i = 1;
+  coroutine();
+  While true then
+    i = i * 2;
+    co_return(i);
+  end
+  co_end();
+  return i;
+end
+
+Main then
+  For int i = 0; i < 20; i++ then
+    displayln(example());
+  end
+end

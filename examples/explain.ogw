@@ -1,0 +1,5 @@
+comment("We have access to some help information.");
+
+Main then
+  evil_explain("EVIL_BOOL");
+end

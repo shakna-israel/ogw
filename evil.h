@@ -68,6 +68,7 @@ Redistribution and use in source and binary forms, with or without modification,
 #define EVIL_HELP
 #define EVIL_LOG
 #define EVIL_MATH
+#define EVIL_MALLOC
 
 /* initializes mt[N] with a seed */
 void randomseed(unsigned long s);

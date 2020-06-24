@@ -1,0 +1,13 @@
+comment("By default you get two simple type specifiers.");
+
+comment("Number for int64_t. Decimal for long double.");
+
+Main then
+  Number(x) = 12;
+  displayln(x);
+  displayln(MaxNumber);
+
+  Decimal(y) = 12.2;
+  displayln(y);
+  displayln(MaxDecimal);
+end

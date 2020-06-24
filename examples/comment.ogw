@@ -1,0 +1,8 @@
+comment("This is a demonstration of the comment \
+	function.");
+
+comment(1 + 2 = 3);
+
+Main then
+  displayln("Hello, World!");
+end

@@ -1,0 +1,12 @@
+comment("C's booleans are available by default.");
+
+Main then
+  bool x = false;
+  displayln(x);
+
+  displayln(true);
+  
+  displayln(false);
+  
+  displayln(true != false);
+end

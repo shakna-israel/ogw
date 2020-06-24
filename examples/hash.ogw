@@ -1,0 +1,12 @@
+comment("We have access to some hashing functions.");
+
+Main then
+  displayln(jenkins64("Hello, World!", 12));
+  displayln(jenkins32("Hello, World!", 12));
+  
+  displayln(fletcher64("Hello, World!", 12));
+  displayln(fletcher32("Hello, World!", 12));
+  displayln(fletcher16("Hello, World!", 12));
+
+  displayln(adler32("Hello, World!", 12));
+end

@@ -1,0 +1,14 @@
+Main then
+  comment("This will exit if malloc fails.");
+  checked_malloc(x, char*, sizeof(char) * 6, "Out of Memory", true);
+
+  x[0] = 'H';
+  x[1] = 'e';
+  x[2] = 'l';
+  x[3] = 'l';
+  x[4] = 'o';
+  x[5] = '\0';
+
+  displayln(x);
+  free(x);
+end

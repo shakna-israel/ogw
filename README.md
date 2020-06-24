@@ -32,6 +32,7 @@ However, `ogw` sets these defines:
 	#define EVIL_HELP
 	#define EVIL_LOG
 	#define EVIL_MATH
+	#define EVIL_MALLOC
 
 Instead of CNoEvil's random, we have a better set of functions that use a Mersenne Twister instead of C's crippled `rand`:
 

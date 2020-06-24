@@ -1,0 +1,25 @@
+comment("CNoEvil has several whitespace-agnostic flow helpers.");
+
+proc(gt, bool, int a, int b)
+  If a > b then
+    return true;
+  Else
+    return false;
+  end
+end
+
+Main then
+  While gt(1, 2) then
+    displayln("Wat?");
+  end
+
+  int x = 1;
+  Switch(x)
+    Case(1)
+      displayln("Woot!");
+      break;
+    default:
+      displayln("Huh?");
+  end
+
+end

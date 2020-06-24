@@ -1,0 +1,17 @@
+comment("We have access to... Morse Code encoding?");
+
+Main then
+
+  // Encode it
+  char* s = morse_encode("Hello, World!", 14);
+  printf("%s\n", s);
+
+  // Decode it
+  char* s2 = morse_decode(s, strlen(s));
+  printf("%s\n", s2);
+
+  // Clean up
+  free(s);
+  free(s2);
+
+end
