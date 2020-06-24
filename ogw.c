@@ -4,6 +4,8 @@
 
 #include <libtcc.h>
 
+#include <libgen.h>
+
 #include <evil_build.h>
 /*
   Supplies:
@@ -96,11 +98,22 @@ int main(int argc, char* argv[]) {
     }
   }
 
-  // TODO: We should check for a libraries.txt file relative to
+  // Check for a libraries.txt file relative to
   // the file being executed, not the current working directory.
 
+  char* dir = dirname(argv[1]);
+  size_t dir_len = strnlen(dir, FILENAME_MAX);
+
+  size_t path_size = dir_len + 15;
+
+  char* libraries_txt_path = calloc(path_size, sizeof(char));
+  for(size_t i = 0; i < dir_len; i++) {
+    libraries_txt_path[i] = dir[i];
+  }
+  strcat(libraries_txt_path, "/libraries.txt");
+
   // This is a line-deliminated series of libraries
-  FILE* req_file = fopen("libraries.txt", "r");
+  FILE* req_file = fopen(libraries_txt_path, "r");
   if(req_file != NULL) {
     char* buffer = calloc(FILENAME_MAX, sizeof(char));
     if(!buffer) {
@@ -116,6 +129,7 @@ int main(int argc, char* argv[]) {
     fclose(req_file);
     free(buffer);
   }
+  free(libraries_txt_path);
 
   // TODO: We should be able to set INCLUDE_PATHS, LIBRARY_PATHS and LIBRARIES
   // somehow else. Maybe we could add a mandatory header to the file or something?

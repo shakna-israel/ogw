@@ -44,7 +44,7 @@ C expects you to be able to link against libraries, and to include various heade
 
 * The include folder inside the current path is added as a header search path. (`./include`)
 
-* If there is a file called `libraries.txt` in the current working directory, it is treated like a line-deliminated series of libraries to link.
+* If there is a file called `libraries.txt` in the same directory as the file being executed, it is treated like a line-deliminated series of libraries to link.
 
 * If there is an environment variable called `LIBRARIES`, it is treated like a `;` deliminated series of libraries to link.
 
@@ -68,7 +68,7 @@ Then run:
 
 ### Platforms
 
-I've only run this against Linux. Windows & macOS users will probably have to tweak the Makefile for their platform, but it should be able to get it running with minimal fuss.
+I've only run this against Linux.
 
 ## Usage
 
