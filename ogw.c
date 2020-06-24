@@ -13,10 +13,6 @@
 
 TCCState *s;
 
-// TODO: How the heck do we do these _before_ compiling?
-// tcc_add_library(s, library_name);
-// tcc_add_include_path(s, filename);
-
 int main(int argc, char* argv[]) {
 
   if(argc < 2) {
@@ -72,6 +68,32 @@ int main(int argc, char* argv[]) {
       cur++;
     }
   } while(c != EOF);
+
+  // This accepts a ; seperated string.
+  char* include_path = getenv("INCLUDE_PATHS");
+  if(include_path != NULL) {
+    tcc_add_include_path(s, include_path);
+  }
+
+  // This accepts a ; seperated string.
+  char* library_path = getenv("LIBRARY_PATHS");
+  if(library_path != NULL) {
+    tcc_add_library_path(s, library_path);
+  }
+
+  // This accepts a ; seperated string.
+  char* libraries = getenv("LIBRARIES");
+  if(libraries != NULL) {
+    char* chunk;
+    chunk = strtok(libraries, ";");
+    while(chunk != NULL) {
+      tcc_add_library(s, chunk);
+      chunk = strtok(NULL, ";");
+    }
+  }
+
+  // TODO: We should be able to set INCLUDE_PATHS, LIBRARY_PATHS and LIBRARIES
+  // somehow else. Maybe we could add a mandatory header to the file or something?
 
   /* Compile the program */
   if (tcc_compile_string(s, program) == -1) {
