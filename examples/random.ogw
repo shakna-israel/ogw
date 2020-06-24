@@ -3,6 +3,13 @@ comment("This demonstrates our Mersenne Twister for random numbers.");
 #include <time.h>
 
 Main then
+	comment("Seed the random number generator.");
 	randomseed(time(0));
+
+	comment("Print a random integer.");
 	printf("%zu\n", randomint());
+
+	comment("Print a random integer from a given range.");
+	printf("%zu\n", randomrange(4, 8));
+
 end

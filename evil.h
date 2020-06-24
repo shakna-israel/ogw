@@ -75,6 +75,9 @@ void randomseed(unsigned long s);
 /* generates a random number on [0,0xffffffff]-interval */
 unsigned long randomint(void);
 
+/* generates a random number on [0,0xffffffff]-interval within the given range */
+#define randomrange(min, max) (randomint() % (max + 1 - min)) + min
+
 /* generates a random number on [0,0x7fffffff]-interval */
 long randomint_31(void);
 
