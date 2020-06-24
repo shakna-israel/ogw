@@ -1,0 +1,204 @@
+comment("This is a demonstration of a more fully-featured program.");
+
+comment("This was made by roughly following: https://brennan.io/2015/01/16/write-a-shell-in-c/");
+
+#include <sys/wait.h>
+#include <unistd.h>
+
+/*
+  Function Declarations for builtin shell commands:
+ */
+declare(lsh_cd, int, char** args);
+declare(lsh_help, int, char** args);
+declare(lsh_exit, int, char** args);
+
+/*
+  List of builtin commands, followed by their corresponding functions.
+ */
+char* builtin_str[] = {
+  "cd",
+  "help",
+  "exit"
+};
+
+int (*builtin_func[]) (char **) = {
+  &lsh_cd,
+  &lsh_help,
+  &lsh_exit
+};
+
+proc(lsh_num_builtins, int, void)
+  return sizeof(builtin_str) / sizeof(char *);
+end
+
+/*
+  Builtin function implementations.
+*/
+proc(lsh_cd, int, char** args)
+  If args[1] == NULL then
+    fprintf(stderr, "lsh: expected argument to \"cd\"\n");
+  Else
+    If chdir(args[1]) != 0 then
+      perror("lsh");
+    end
+  end
+  return true;
+end
+
+proc(lsh_help, int, char** args)
+  int i;
+  displayln("Stephen Brennan's LSH");
+  displayln("Type program names and arguments, and hit enter.");
+  displayln("The following are built in:");
+
+  For i = 0; i < lsh_num_builtins(); i++ then
+    printf("  %s\n", builtin_str[i]);
+  end
+
+  displayln("Use the man command for information on other programs.");
+  return true;
+end
+
+proc(lsh_exit, int, char** args)
+  return false;
+end
+
+
+#define LSH_RL_BUFSIZE 1024
+proc(lsh_read_line, char*, void)
+  int bufsize = LSH_RL_BUFSIZE;
+  int position = 0;
+  char* buffer = malloc(sizeof(char) * bufsize);
+  int c;
+
+  If !buffer then
+    fprintf(stderr, "lsh: allocation error\n");
+    exit(EXIT_FAILURE);
+  end
+
+  While true then
+    // Read a character
+    c = getchar();
+
+    // If we hit EOF, replace it with a null character and return.
+    If c == EOF || c == '\n' then
+      buffer[position] = '\0';
+      return buffer;
+    Else
+      buffer[position] = c;
+    end
+    position++;
+
+    // If we have exceeded the buffer, reallocate.
+    If position >= bufsize then
+      bufsize += LSH_RL_BUFSIZE;
+      buffer = realloc(buffer, bufsize);
+      If !buffer then
+        fprintf(stderr, "lsh: allocation error\n");
+        exit(EXIT_FAILURE);
+      end
+    end
+  end
+end
+
+#define LSH_TOK_BUFSIZE 64
+#define LSH_TOK_DELIM " \t\r\n\a"
+proc(lsh_split_line, char**, char* line)
+  int bufsize = LSH_TOK_BUFSIZE, position = 0;
+  char **tokens = malloc(bufsize * sizeof(char*));
+  char *token;
+
+  If !tokens then
+    fprintf(stderr, "lsh: allocation error\n");
+    exit(EXIT_FAILURE);
+  end
+
+  token = strtok(line, LSH_TOK_DELIM);
+  While token != NULL then
+    tokens[position] = token;
+    position++;
+
+    If position >= bufsize then
+      bufsize += LSH_TOK_BUFSIZE;
+      tokens = realloc(tokens, bufsize * sizeof(char*));
+      If !tokens then
+        fprintf(stderr, "lsh: allocation error\n");
+        exit(EXIT_FAILURE);
+      end
+    end
+
+    token = strtok(NULL, LSH_TOK_DELIM);
+  end
+  tokens[position] = NULL;
+  return tokens;
+end
+
+proc(lsh_launch, int, char** args)
+  pid_t pid, wpid;
+  int status;
+
+  pid = fork();
+  If pid == 0 then
+    // Child process
+    If execvp(args[0], args) == -1 then
+      perror("lsh");
+    end
+    exit(EXIT_FAILURE);
+  Elif pid < 0 then
+    // Error forking
+    perror("lsh");
+  Else
+    // Parent process
+    Do
+      wpid = waitpid(pid, &status, WUNTRACED);
+    end while (!WIFEXITED(status) && !WIFSIGNALED(status));
+  end
+
+  return 1;
+end
+
+proc(lsh_execute, int, char** args)
+  int i;
+
+  If args[0] == NULL then
+    // An empty command was entered.
+    return true;
+  end
+
+  For i = 0; i < lsh_num_builtins(); i++ then
+    If strcmp(args[0], builtin_str[i]) == 0 then
+      return (*builtin_func[i])(args);
+    end
+  end
+
+  return lsh_launch(args);
+end
+
+proc(lsh_loop, void, void)
+  char* line;
+  char** args;
+  int status;
+
+  Do
+    display("> ");
+    line = lsh_read_line();
+    args = lsh_split_line(line);
+    status = lsh_execute(args);
+
+    free(line);
+    free(args);
+  end while(status); // TODO: Clean this up.
+
+  
+end
+
+Main then
+  // Load config files, if any.
+
+  // Run command loop.
+  lsh_loop();
+
+  // Perform any shutdown/cleanup.
+
+  return EXIT_SUCCESS;
+end

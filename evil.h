@@ -1044,6 +1044,7 @@ double randomreal_53(void);
   #define end }
   #define If if(
   #define Else } else {
+  #define Elif } else if (
   #define For for(
   #define While while(
   #define Do do{
