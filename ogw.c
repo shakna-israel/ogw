@@ -43,25 +43,25 @@ int main(int argc, char* argv[]) {
 
   // Get the file size...
   fseek(openFile, 0L, SEEK_END);
-  size += ftell(openFile);
+  size += (size_t)ftell(openFile);
   fseek(openFile, 0L, SEEK_SET);
 
   char* program = calloc(size + 1, sizeof(char));
 
   // Copy in our header...
-  for(int i = 0; i < evil_h_len; i++) {
-    program[i] = evil_h[i];
+  for(size_t i = 0; i < evil_h_len; i++) {
+    program[i] = (char)evil_h[i];
   }
   program[evil_h_len] = '\n';
   program[evil_h_len + 1] = '\n';
 
   // Copy in the user's file...
-  int cur = evil_h_len + 2;
+  size_t cur = evil_h_len + 2;
   int c = 0;
   do {
     c = fgetc(openFile);
     if(c != EOF) {
-      program[cur] = c;
+      program[cur] = (char)c;
       cur++;
     }
   } while(c != EOF);

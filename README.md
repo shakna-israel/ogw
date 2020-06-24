@@ -14,6 +14,8 @@ The name should let you know that this is a terrible idea.
 
 Expanding on the absolute terrible idea, this program, which can be shortened to `ogw`, acts as a C compiler for CNoEvil programs, without the need to first include the header file.
 
+---
+
 ## Differences
 
 A few features of CNoEvil aren't part of `ogw`:
@@ -26,9 +28,35 @@ A few features of CNoEvil aren't part of `ogw`:
 
 	* We will probably reimplement this using a differing syntax.
 
+---
+
 ## Limitations
 
 Currently there is no way to add libraries or header files. (This will be implemented further down the line).
+
+---
+
+## Building
+
+You'll need to have `libtcc` installed and available.
+
+You'll need to have `xxd` installed.
+
+You'll need a C compiler, and `make`.
+
+Then run:
+
+	make
+
+### Platforms
+
+I've only run this against Linux. Windows & macOS users will probably have to tweak the Makefile for their platform, but it should be able to get it running with minimal fuss.
+
+## Usage
+
+Once built, you can run it with:
+
+	./ogw FILE
 
 ---
 
