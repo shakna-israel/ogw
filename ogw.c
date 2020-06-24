@@ -96,22 +96,25 @@ int main(int argc, char* argv[]) {
     }
   }
 
-  // TODO: Library name length limit?
-  #define LIBRARY_NAME_LENGTH_LIMIT 200
-
   // TODO: We should check for a libraries.txt file relative to
   // the file being executed, not the current working directory.
 
   // This is a line-deliminated series of libraries
   FILE* req_file = fopen("libraries.txt", "r");
   if(req_file != NULL) {
-    char buffer[LIBRARY_NAME_LENGTH_LIMIT];
-    if (fgets(buffer, LIBRARY_NAME_LENGTH_LIMIT, req_file) != NULL) {
+    char* buffer = calloc(FILENAME_MAX, sizeof(char));
+    if(!buffer) {
+      fprintf(stderr, "OGW ERROR: Unable to allocate space for library name.\n");
+      return 1;
+    }
+
+    if (fgets(buffer, FILENAME_MAX, req_file) != NULL) {
       // Remove trailing new line if it exists
       buffer[strcspn(buffer, "\n")] = 0;
       tcc_add_library(s, buffer);
     }
     fclose(req_file);
+    free(buffer);
   }
 
   // TODO: We should be able to set INCLUDE_PATHS, LIBRARY_PATHS and LIBRARIES
