@@ -1,0 +1,11 @@
+comment("We link to the gc library in our `libraries.txt` file.")
+
+#include <gc.h>
+
+Main then
+	char* x = GC_MALLOC(sizeof(char) * 3);
+	x[0] = 'a';
+	x[1] = 'b';
+	x[3] = 0;
+	printf("%s\n", x);
+end

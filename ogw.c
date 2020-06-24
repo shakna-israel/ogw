@@ -95,6 +95,9 @@ int main(int argc, char* argv[]) {
   // TODO: Library name length limit?
   #define LIBRARY_NAME_LENGTH_LIMIT 200
 
+  // TODO: We should check for a libraries.txt file relative to
+  // the file being executed, not the current working directory.
+
   // This is a line-deliminated series of libraries
   FILE* req_file = fopen("libraries.txt", "r");
   if(req_file != NULL) {
