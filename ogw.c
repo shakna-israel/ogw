@@ -51,7 +51,7 @@ int main(int argc, char* argv[]) {
 
   char* program = calloc(size + 1, sizeof(char));
   if(!program) {
-    fprintf(stderr, "OGW ERROR: Unable to allocate space for the program");
+    fprintf(stderr, "OGW ERROR: Unable to allocate space for the program\n");
     return 1;
   }
 
