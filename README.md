@@ -14,6 +14,8 @@ The name should let you know that this is a terrible idea.
 
 Expanding on the absolute terrible idea, this program, which can be shortened to `ogw`, acts as a C compiler for CNoEvil programs, without the need to first include the header file.
 
+The name is the first thing that should come to mind when you consider the existence of this project.
+
 ---
 
 ## Differences
