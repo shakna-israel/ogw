@@ -1,6 +1,6 @@
 # Oh, God, WHY!?
 
-`Oh, God, WHY!?` is a simple wrapper around [cnoevil](https://git.sr.ht/~shakna/cnoevil3/) and [libtcc](https://bellard.org/tcc/) to create a compiler/interpreter for the "language".
+`Oh, God, WHY!?` transforms [cnoevil](https://git.sr.ht/~shakna/cnoevil3/) into a full-blown "language".
 
 ---
 
