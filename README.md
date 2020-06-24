@@ -4,6 +4,31 @@
 
 ---
 
+## Example Code
+
+	comment("A demonstration of a coroutine.");
+
+	declare(example, int);
+
+	proc(example, int)
+	  static int i = 1;
+	  coroutine();
+	  While true then
+	    i = i * 2;
+	    co_return(i);
+	  end
+	  co_end();
+	  return i;
+	end
+
+	Main then
+	  For int i = 0; i < 20; i++ then
+	    displayln(example());
+	  end
+	end
+
+---
+
 ## CNoEvil
 
 I've written a little about CnoEvil [before](https://gist.github.com/shakna-israel/4fd31ee469274aa49f8f9793c3e71163#lets-destroy-c). The basic idea is to create a super-set of C by abusing macros to generate features to make it _seem_ like the language is higher level than it is.
