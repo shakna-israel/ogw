@@ -80,4 +80,4 @@ Once built, you can run it with:
 
 ## License
 
-See the `LICENSE.md` file, taking careful not of point number 1.
+See the `LICENSE.md` file, taking careful note of point number 1.
