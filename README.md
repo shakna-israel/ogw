@@ -38,13 +38,19 @@ However, `ogw` sets these defines:
 
 ## Limitations
 
-Currently there is no way to link libraries or add header file search paths. (This will be implemented further down the line).
-
-However, to help with this:
+C expects you to be able to link against libraries, and to include various headers files. There is no singular way of importing. To help with this, `ogw` does the following:
 
 * The current folder is added as a header search path. (`.`)
 
 * The include folder inside the current path is added as a header search path. (`./include`)
+
+* If there is a file called `libraries.txt` in the current working directory, it is treated like a line-deliminated series of libraries to link.
+
+* If there is an environment variable called `LIBRARIES`, it is treated like a `;` deliminated series of libraries to link.
+
+* If there is an environment variable called `LIBRARY_PATHS`, it is treated like a `;` deliminated series of library paths to use for linking.
+
+* If there is an environment variable called `INCLUDE_PATHS`, it is treated like a `;` deliminated series of include paths to search.
 
 ---
 

@@ -92,6 +92,21 @@ int main(int argc, char* argv[]) {
     }
   }
 
+  // TODO: Library name length limit?
+  #define LIBRARY_NAME_LENGTH_LIMIT 200
+
+  // This is a line-deliminated series of libraries
+  FILE* req_file = fopen("libraries.txt", "r");
+  if(req_file != NULL) {
+    char buffer[LIBRARY_NAME_LENGTH_LIMIT];
+    if (fgets(buffer, LIBRARY_NAME_LENGTH_LIMIT, req_file) != NULL) {
+      // Remove trailing new line if it exists
+      buffer[strcspn(buffer, "\n")] = 0;
+      tcc_add_library(s, buffer);
+    }
+    fclose(req_file);
+  }
+
   // TODO: We should be able to set INCLUDE_PATHS, LIBRARY_PATHS and LIBRARIES
   // somehow else. Maybe we could add a mandatory header to the file or something?
 
