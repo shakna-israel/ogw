@@ -32,7 +32,13 @@ A few features of CNoEvil aren't part of `ogw`:
 
 ## Limitations
 
-Currently there is no way to add libraries or header files. (This will be implemented further down the line).
+Currently there is no way to link libraries or add header file search paths. (This will be implemented further down the line).
+
+However, to help with this:
+
+* The current folder is added as a header search path. (`.`)
+
+* The include folder inside the current path is added as a header search path. (`./include`)
 
 ---
 
