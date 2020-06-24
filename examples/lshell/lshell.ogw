@@ -5,16 +5,15 @@ comment("This was made by roughly following: https://brennan.io/2015/01/16/write
 #include <sys/wait.h>
 #include <unistd.h>
 
-/*
-  Function Declarations for builtin shell commands:
- */
+comment("Function Declarations for builtin shell commands:");
+
 declare(lsh_cd, int, char** args);
 declare(lsh_help, int, char** args);
 declare(lsh_exit, int, char** args);
 
-/*
-  List of builtin commands, followed by their corresponding functions.
- */
+
+comment("List of builtin commands, followed by their corresponding functions.");
+
 char* builtin_str[] = {
   "cd",
   "help",
@@ -31,9 +30,9 @@ proc(lsh_num_builtins, int, void)
   return sizeof(builtin_str) / sizeof(char *);
 end
 
-/*
-  Builtin function implementations.
-*/
+
+comment("Builtin function implementations.");
+
 proc(lsh_cd, int, char** args)
   If args[1] == NULL then
     fprintf(stderr, "lsh: expected argument to \"cd\"\n");
@@ -77,10 +76,10 @@ proc(lsh_read_line, char*, void)
   end
 
   While true then
-    // Read a character
+    comment("Read a character");
     c = getchar();
 
-    // If we hit EOF, replace it with a null character and return.
+    comment("If we hit EOF, replace it with a null character and return.");
     If c == EOF || c == '\n' then
       buffer[position] = '\0';
       return buffer;
@@ -89,7 +88,7 @@ proc(lsh_read_line, char*, void)
     end
     position++;
 
-    // If we have exceeded the buffer, reallocate.
+    comment("If we have exceeded the buffer, reallocate.");
     If position >= bufsize then
       bufsize += LSH_RL_BUFSIZE;
       buffer = realloc(buffer, bufsize);
@@ -139,16 +138,16 @@ proc(lsh_launch, int, char** args)
 
   pid = fork();
   If pid == 0 then
-    // Child process
+    comment("Child process");
     If execvp(args[0], args) == -1 then
       perror("lsh");
     end
     exit(EXIT_FAILURE);
   Elif pid < 0 then
-    // Error forking
+    comment("Error forking");
     perror("lsh");
   Else
-    // Parent process
+    comment("Parent process");
     Do
       wpid = waitpid(pid, &status, WUNTRACED);
     end while (!WIFEXITED(status) && !WIFSIGNALED(status));
@@ -161,7 +160,7 @@ proc(lsh_execute, int, char** args)
   int i;
 
   If args[0] == NULL then
-    // An empty command was entered.
+    comment("An empty command was entered.");
     return true;
   end
 
@@ -187,18 +186,15 @@ proc(lsh_loop, void, void)
 
     free(line);
     free(args);
-  end while(status); // TODO: Clean this up.
+  end while(status);
 
   
 end
 
 Main then
-  // Load config files, if any.
+  comment("Run command loop.");
 
-  // Run command loop.
   lsh_loop();
-
-  // Perform any shutdown/cleanup.
 
   return EXIT_SUCCESS;
 end
