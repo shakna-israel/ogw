@@ -1,0 +1,6 @@
+comment("This is a simple program that prints to the screen.");
+comment("Note the lack of formatter - it's generic.");
+
+Main then
+  displayln("Hello, World!");
+end
