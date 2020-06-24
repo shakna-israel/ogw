@@ -28,6 +28,22 @@ A few features of CNoEvil aren't part of `ogw`:
 
 	* We will probably reimplement this using a differing syntax.
 
+Usually when using CNoEvil you need to make a series of defines first, to choose what modules you'll enable/disable.
+
+However, `ogw` sets these defines:
+
+	#define EVIL_NO_WARN
+	#define EVIL_COROUTINE
+	#define EVIL_ASSERT
+	#define EVIL_BIT
+	#define EVIL_CLI
+	#define EVIL_ENCODE
+	#define EVIL_HASH
+	#define EVIL_HELP
+	#define EVIL_LOG
+	#define EVIL_MATH
+	#define EVIL_RANDOM
+
 ---
 
 ## Limitations

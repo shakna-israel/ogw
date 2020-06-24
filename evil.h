@@ -57,6 +57,18 @@ Redistribution and use in source and binary forms, with or without modification,
 
 #define EVIL_HASH_VER "c0e70cd41f053e"
 
+// TODO: OGW Specific imports
+#define EVIL_NO_WARN
+#define EVIL_COROUTINE
+#define EVIL_ASSERT
+#define EVIL_BIT
+#define EVIL_CLI
+#define EVIL_ENCODE
+#define EVIL_HASH
+#define EVIL_HELP
+#define EVIL_LOG
+#define EVIL_MATH
+#define EVIL_RANDOM
 
 #ifdef EVIL_ASSERT
 
@@ -2328,12 +2340,6 @@ void evil_explain(const char* token) {
 
 #endif
 
-#ifdef EVIL_LIST
-
-  // TODO: gc-backed linked list library
-  #error "Not Yet Implemented"
-
-#endif
 #ifdef EVIL_LOG
 
   // File definitions for the user to control.
@@ -2509,14 +2515,6 @@ void evil_explain(const char* token) {
   #define checked_malloc(object, object_type, buffer, fail_msg, exit_q) object_type object = malloc(buffer); if(!object){fprintf(stderr, "%s\n", fail_msg); if(exit_q){exit(EXIT_FAILURE);}}
 #endif
 
-#ifdef EVIL_MANAGED
-
-#define finalise(_func) __attribute__ ((__cleanup__(_func)))
-
-#define var(type, finaliser, name) type name __attribute__ ((__cleanup__(finaliser)))
-
-#endif
-
 #ifdef EVIL_MATH
 
   // This library does the heavy lifting.
@@ -2527,35 +2525,6 @@ void evil_explain(const char* token) {
   #define take(_a, _b) (_a - _b)
   #define multiply(_a, _b) (_a * _b)
   #define divide(_a, _b) (_a / _b)
-#endif
-#ifdef EVIL_PARSE_ARG
-
-  #error "Not Yet Implemented"
-
-  /*
-
-  Needs to handle:
-
-  Single letter flags:
-
-  -a -b
-  -ab
-
-  Key word flags:
-
-  --word=x
-  --word x
-
-  Setting boolean flags:
-  (absence implies false)
-
-  --bool-flag true
-  --bool-flag false
-  ---bool-flag
-
-
-  */
-
 #endif
 
 #ifndef EVIL_NO_PROC
@@ -2586,15 +2555,6 @@ void evil_explain(const char* token) {
   // specifiers in the C standard.
   #define storage(_type, _name, _value) static _type _name = _value
 #endif
-#ifdef EVIL_STRING
-
-  // TODO: gc-backed cord lib
-  #error "Not Yet Implemented"
-
-  // Should also provide wrapper functions for any other modules
-  // that use a C String.
-
-#endif
 
 #ifndef EVIL_NO_STRUCT
   // Imported by default
@@ -2604,7 +2564,5 @@ void evil_explain(const char* token) {
   #define Union(_name) union __name {
   #define Typedef typedef
 #endif
-
-// TODO: OGW Specifics
 
 #endif
