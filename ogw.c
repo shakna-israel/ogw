@@ -122,6 +122,17 @@ int main(int argc, char* argv[]) {
     }
   }
 
+  // This accepts a ; seperated string.
+  char* units = getenv("UNITS");
+  if(units != NULL) {
+    char* chunk;
+    chunk = strtok(units, ";");
+    while(chunk != NULL) {
+      tcc_add_file(s, chunk);
+      chunk = strtok(NULL, ";");
+    }
+  }
+
   // Check for a libraries.txt file relative to
   // the file being executed, not the current working directory.
 
@@ -160,6 +171,42 @@ int main(int argc, char* argv[]) {
     free(buffer);
   }
   free(libraries_txt_path);
+
+  // Check for a units.txt file relative to
+  // the file being executed, not the current working directory.
+
+  path_size = dir_len + 11;
+
+  char* units_txt_path = calloc(path_size, sizeof(char));
+
+  if(!units_txt_path) {
+    fprintf(stderr, "OGW ERROR: Unable to allocate space for units.txt path.");
+    return 1;
+  }
+
+  for(size_t i = 0; i < dir_len; i++) {
+    units_txt_path[i] = dir[i];
+  }
+  strcat(units_txt_path, "/units.txt");
+
+  // This is a line-deliminated series of libraries
+  req_file = fopen(units_txt_path, "r");
+  if(req_file != NULL) {
+    char* buffer = calloc(FILENAME_MAX, sizeof(char));
+    if(!buffer) {
+      fprintf(stderr, "OGW ERROR: Unable to allocate space for unit filename.\n");
+      return 1;
+    }
+
+    if (fgets(buffer, FILENAME_MAX, req_file) != NULL) {
+      // Remove trailing new line if it exists
+      buffer[strcspn(buffer, "\n")] = 0;
+      tcc_add_file(s, buffer);
+    }
+    fclose(req_file);
+    free(buffer);
+  }
+  free(units_txt_path);
 
   // TODO: We should be able to set INCLUDE_PATHS, LIBRARY_PATHS
   // somehow else. Maybe we could add a mandatory header to the file or something?
