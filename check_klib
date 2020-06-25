@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if [ ! -d klib ]; then
+  git clone https://github.com/attractivechaos/klib
+else
+  cd klib
+  git pull origin master
+  cd ..
+fi

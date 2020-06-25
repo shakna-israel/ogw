@@ -1,0 +1,18 @@
+comment("khash from klib is available.");
+
+KHASH_SET_INIT_STR(str);
+
+Main then
+	khash_t(str) *h;
+	khint_t k;
+	int i, absent;
+	h = kh_init(str);
+
+	For i = 1; i < argc; ++i then
+		k = kh_put(str, h, argv[i], &absent);
+	end
+	printf("# of distinct words: %d\n", kh_size(h));
+
+	kh_destroy(str, h);
+	return 0;
+end

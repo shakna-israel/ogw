@@ -70,6 +70,8 @@ Redistribution and use in source and binary forms, with or without modification,
 #define EVIL_MATH
 #define EVIL_MALLOC
 
+// MT19937
+
 /* initializes mt[N] with a seed */
 void randomseed(unsigned long s);
 

@@ -209,7 +209,7 @@ int main(int argc, char* argv[]) {
   free(units_txt_path);
 
   // TODO: We should be able to set INCLUDE_PATHS, LIBRARY_PATHS
-  // somehow else. Maybe we could add a mandatory header to the file or something?
+  // somehow else. Some more relative text files?
 
   /* Compile the program */
   if (tcc_compile_string(s, program) == -1) {
@@ -219,6 +219,8 @@ int main(int argc, char* argv[]) {
 
   /* TODO: Expose any helpers */
   //tcc_add_symbol(s, "name", function);
+
+  // MT19937
   tcc_add_symbol(s, "randomseed", init_genrand);
   tcc_add_symbol(s, "randomint", genrand_int32);
   tcc_add_symbol(s, "randomint_31", genrand_int31);
