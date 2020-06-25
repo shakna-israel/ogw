@@ -88,13 +88,13 @@ C expects you to be able to link against libraries, and to include various heade
 
 * If there is a file called `units.txt` in the same directory as the file being executed, it is treated like a line-deliminated series of compilation units to link.
 
-* If there is an environment variable called `UNITS`, it is treated like a `;` deliminated series of files to link.
+* If there is an environment variable called `OGW_UNITS`, it is treated like a `;` deliminated series of files to link.
 
-* If there is an environment variable called `LIBRARIES`, it is treated like a `;` deliminated series of libraries to link.
+* If there is an environment variable called `OGW_LIBRARIES`, it is treated like a `;` deliminated series of libraries to link.
 
-* If there is an environment variable called `LIBRARY_PATHS`, it is treated like a `;` deliminated series of library paths to use for linking.
+* If there is an environment variable called `OGW_LIBRARY_PATHS`, it is treated like a `;` deliminated series of library paths to use for linking.
 
-* If there is an environment variable called `INCLUDE_PATHS`, it is treated like a `;` deliminated series of include paths to search.
+* If there is an environment variable called `OGW_INCLUDE_PATHS`, it is treated like a `;` deliminated series of include paths to search.
 
 ---
 

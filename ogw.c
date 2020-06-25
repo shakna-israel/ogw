@@ -100,19 +100,19 @@ int main(int argc, char* argv[]) {
   } while(c != EOF);
 
   // This accepts a ; seperated string.
-  char* include_path = getenv("INCLUDE_PATHS");
+  char* include_path = getenv("OGW_INCLUDE_PATHS");
   if(include_path != NULL) {
     tcc_add_include_path(s, include_path);
   }
 
   // This accepts a ; seperated string.
-  char* library_path = getenv("LIBRARY_PATHS");
+  char* library_path = getenv("OGW_LIBRARY_PATHS");
   if(library_path != NULL) {
     tcc_add_library_path(s, library_path);
   }
 
   // This accepts a ; seperated string.
-  char* libraries = getenv("LIBRARIES");
+  char* libraries = getenv("OGW_LIBRARIES");
   if(libraries != NULL) {
     char* chunk;
     chunk = strtok(libraries, ";");
@@ -123,7 +123,7 @@ int main(int argc, char* argv[]) {
   }
 
   // This accepts a ; seperated string.
-  char* units = getenv("UNITS");
+  char* units = getenv("OGW_UNITS");
   if(units != NULL) {
     char* chunk;
     chunk = strtok(units, ";");
