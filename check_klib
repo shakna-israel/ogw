@@ -1,8 +1,10 @@
 #!/bin/sh
 
 if [ ! -d klib ]; then
+  set -e
   git clone https://github.com/attractivechaos/klib
 else
+  # Allow updates to fail, because internet dependency for build is wrong.
   cd klib
   git pull origin master
   cd ..
