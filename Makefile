@@ -4,7 +4,11 @@ COPTIM=-O3
 all:
 	sh -x check_klib
 	cp evil.h evil.h.bak
+
+	# Expose klib libs
 	cat klib/khash.h >> evil.h
+	cat klib/kvec.h >> evil.h
+
 	xxd -i evil.h > evil_build.h
 	mv evil.h.bak evil.h
 	$(CC) $(COPTIM) $(CFLAGS) MT19937.c ogw.c -I. -ltcc -ldl -o ogw
