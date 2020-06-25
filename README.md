@@ -114,7 +114,11 @@ I've only run this against Linux.
 
 Once built, you can run it with:
 
-	./ogw FILE
+	./ogw -run FILE
+
+Or you can generate an executable file with:
+
+	./ogw INPUT_FILE OUTPUT_FILE
 
 ---
 

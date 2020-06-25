@@ -19,15 +19,34 @@
 */
 
 TCCState *s;
+int run_mode;
 
 int main(int argc, char* argv[]) {
 
   if(argc < 2) {
-    fprintf(stderr, "OGW ERROR: No file supplied.\n");
+    fprintf(stderr, "OGW ERROR: No input file supplied.\n");
     return 1;
   }
 
-  FILE* openFile = fopen(argv[1], "r");
+  if(argc < 3) {
+    fprintf(stderr, "OGW ERROR: No output file supplied.\n");
+    return 1;
+  }
+
+  // Choose to eval or compile
+  if(strncmp(argv[1], "-run", FILENAME_MAX) == 0) {
+    run_mode = TCC_OUTPUT_MEMORY;
+  } else {
+    run_mode = TCC_OUTPUT_EXE;
+  }
+
+  FILE* openFile;
+  if(run_mode == TCC_OUTPUT_MEMORY) {
+    openFile = fopen(argv[2], "r");
+  } else {
+    openFile = fopen(argv[1], "r");
+  }
+
   if(!openFile) {
     fprintf(stderr, "OGW ERROR: Unable to read file.\n");
     return 1;
@@ -40,7 +59,7 @@ int main(int argc, char* argv[]) {
   }
 
   /* MUST BE CALLED before any compilation */
-  tcc_set_output_type(s, TCC_OUTPUT_MEMORY);
+  tcc_set_output_type(s, run_mode);
 
   // Add some handy include paths...
   tcc_add_include_path(s, "."); // Current folder
@@ -142,7 +161,7 @@ int main(int argc, char* argv[]) {
   }
   free(libraries_txt_path);
 
-  // TODO: We should be able to set INCLUDE_PATHS, LIBRARY_PATHS and LIBRARIES
+  // TODO: We should be able to set INCLUDE_PATHS, LIBRARY_PATHS
   // somehow else. Maybe we could add a mandatory header to the file or something?
 
   /* Compile the program */
@@ -161,7 +180,21 @@ int main(int argc, char* argv[]) {
   tcc_add_symbol(s, "randomreal_3", genrand_real2);
   tcc_add_symbol(s, "randomreal_53", genrand_res53);
 
-  /* relocate the code */
+  // If we're compiling, create an executable and exit.
+  if(run_mode == TCC_OUTPUT_EXE) {
+    if(tcc_output_file(s, argv[2]) < 0) {
+      fprintf(stderr, "OGW ERROR: Failed to output executable file.\n");
+      return 1;
+    }
+
+    // Cleanup
+    tcc_delete(s);
+    free(program);
+
+    return 0;
+  }
+
+  // relocate the code
   if (tcc_relocate(s, TCC_RELOCATE_AUTO) < 0) {
     fprintf(stderr, "OGW ERROR: Unable to initialise executable memory.\n");
     return 1;
@@ -170,7 +203,7 @@ int main(int argc, char* argv[]) {
   // This should have the same signature as main(argc, argv)
   int (*func)(int, char**);
 
-  /* Get the entry point */
+  // Get the entry point
   func = tcc_get_symbol(s, "main");
   if (!func) {
     fprintf(stderr, "OGW ERROR: Unable to find `Main`.\n");
@@ -185,5 +218,5 @@ int main(int argc, char* argv[]) {
   free(program);
 
   // Return the exit status of the program.
-  return r;
+  return 0;
 }
