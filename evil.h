@@ -2560,19 +2560,6 @@ void evil_explain(const char* token) {
   #define declare(_name, _ret, ...) _ret _name(__VA_ARGS__)
   #define proc(_name, _ret, ...) _ret _name(__VA_ARGS__){
 #endif
-#ifdef EVIL_RANDOM
-  #include <stdlib.h>
-  #include <time.h>
-
-  #ifndef EVIL_NO_WARN
-	#warning "randomseed and random(min, max) depend on C's rand. They are not cryptographically safe. They are not even good pseudorandom generators."
-  #endif
-
-  // Crappy C-standard stuff.
-  #define randomseed() srand((unsigned int)time(NULL))
-  #define random(min, max) (rand() % (max + 1 - min)) + min
-  // TODO: Mersenne Twister (see http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/MT2002/CODES/mt19937ar.c)
-#endif
 #ifndef EVIL_NO_SPECIFIER
   // Included by default.
 

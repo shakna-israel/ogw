@@ -1,0 +1,128 @@
+%YAML 1.2
+---
+# See http://www.sublimetext.com/docs/3/syntax.html
+file_extensions:
+  - ogw
+scope: source.ogw
+contexts:
+  main:
+    # Strings begin and end with quotes, and use backslashes as an escape
+    # character
+    - match: '"'
+      scope: punctuation.definition.string.begin.ogw
+      push: double_quoted_string
+
+    # Comments begin with a '//' and finish at the end of the line
+    - match: '//'
+      scope: punctuation.definition.comment.ogw
+      push: line_comment
+
+    # Keywords are if, else for and while.
+    # Note that blackslashes don't need to be escaped within single quoted
+    # strings in YAML. When using single quoted strings, only single quotes
+    # need to be escaped: this is done by using two single quotes next to each
+    # other.
+    - match: '\b(if|else|for|while|return)\b'
+      scope: keyword.control.ogw
+
+    - match: '\b(If|then|end|Main|Else|Elif|For|While|Do|Switch|Case|proc|declare|constant|storage)\b'
+      scope: keyword.control.extended.ogw
+
+    - match: '\b(coroutine|co_return|co_end)\b'
+      scope: constant.character.escape.ogw
+
+    - match: '\b(randomseed|randomint|randomrange|randomint_31|randomreal|randomreal_2|randomreal_3|randomreal_53)\b'
+      scope: entity.name.ogw
+    - match: '\b(Assert|AssertMsg)\b'
+      scope: entity.name.ogw
+    - match: '\b(BIT_AND|BIT_OR|BIT_XOR|BIT_NOT|BIT_RSHIFT|BIT_LSHIFT)\b'
+      scope: entity.name.ogw
+    - match: '\b(cli_reset|cli_fg_256|cli_bg_256|cli_fg_rgb|cli_bg_rgb)\b'
+      scope: entity.name.ogw
+    - match: '\b(cli_fg_black|cli_fg_red|cli_fg_green|cli_fg_yellow|cli_fg_blue|cli_fg_magenta|cli_fg_cyan|cli_fg_white)\b'
+      scope: entity.name.ogw
+    - match: '\b(cli_fg_bright_black|cli_fg_bright_red|cli_fg_bright_green|cli_fg_bright_yellow|cli_fg_bright_blue|cli_fg_bright_magenta|cli_fg_bright_cyan|cli_fg_bright_white)\b'
+      scope: entity.name.ogw
+    - match: '\b(cli_bg_black|cli_bg_red|cli_bg_green|cli_bg_yellow|cli_bg_blue|cli_bg_magenta|cli_bg_cyan|cli_bg_white)\b'
+      scope: entity.name.ogw
+    - match: '\b(cli_bg_bright_black|cli_bg_bright_red|cli_bg_bright_green|cli_bg_bright_yellow|cli_bg_bright_blue|cli_bg_bright_magenta|cli_bg_bright_cyan|cli_bg_bright_white)\b'
+      scope: entity.name.ogw
+    - match: '\b(cli_cursor_up|cli_cursor_down|cli_cursor_left|cli_cursor_right|cli_cursor_save|cli_cursor_restore)\b'
+      scope: entity.name.ogw
+    - match: '\b(cli_screen_clear|cli_screen_clear_before|cli_screen_clear_after)\b'
+      scope: entity.name.ogw
+    - match: '\b(cli_line_clear|cli_line_clear_before|cli_line_clear_after)\b'
+      scope: entity.name.ogw
+    - match: '\b(cli_effect_bold|cli_effect_underline|cli_effect_reverse|cli_effect_blink|cli_effect_invisible|cli_effect_reset)\b'
+      scope: entity.name.ogw
+    - match: '\b(base16_encode|base16_decode|morse_encode|morse_decode)\b'
+      scope: entity.name.ogw
+    - match: '\b(jenkins64|fletcher64|jenkins32|adler32|fletcher32|fletcher16)\b'
+      scope: entity.name.ogw
+    - match: '\b(evil_manual|evil_explain)\b'
+      scope: entity.name.ogw
+    - match: '\b(display_format|display|displayf|displayln|displayfln|repr_type|endlf|checked_malloc)\b'
+      scope: entity.name.ogw
+    - match: '\b(message|warning|critical|error|info|debug)\b'
+      scope: entity.name.ogw
+    - match: '\b(add|take|multiply|divide)\b'
+      scope: entity.name.ogw
+
+    - match: '\b(endl)\b'
+      scope: constant.language
+    - match: '\b(message_file|warning_file|critical_file|error_file|info_file|debug_file|log_file)\b'
+      scope: constant.language
+
+    # Numbers
+    - match: '\b(-)?[0-9.]+\b'
+      scope: constant.numeric.ogw
+    - match: '\b(MaxNumber|MaxDecimal)\b'
+      scope: constant.numeric.ogw
+
+    - match: '\b(BitField|Struct|Union|Typedef)\b'
+      scope: constant.language
+
+    # Basic Type Modifiers
+    - match: '\b(static|inline)\b'
+      scope: storage.type.ogw
+
+    # Basic Types
+    - match: '\b(asm|__asm__|auto|bool|_Bool|char|_Complex|double|float|_Imaginary|int|long|short|signed|unsigned|void|Number|Decimal)\b'
+      scope: storage.type.ogw
+
+    # stdint
+    - match: '\b(int8_t|int16_t|int32_t|int64_t|uint8_t|uint16_t|uint32_t|uint64_t|int_least8_t|int_least16_t|int_least32_t|int_least64_t|uint_least8_t|uint_least16_t|uint_least32_t|uint_least64_t|int_fast8_t|int_fast16_t|int_fast32_t|int_fast64_t|uint_fast8_t|uint_fast16_t|uint_fast32_t|uint_fast64_t|intptr_t|uintptr_t|intmax_t|intmax_t|uintmax_t|uintmax_t)\b'
+      scope: storage.type.ogw
+
+    # comment
+    - match: '\b(comment)\b'
+      scope: comment.block.ogw
+
+    # operators
+    - match: (\.\.|\+=|\+|-=|-|\*=|\*|\/=|\/|%=|%|\|=|\||\|\||&=|&&|&|\^=|\^|\?|:|~=|~|;|<=|<|>=|>|==|=|!=|!|\$)
+      scope: keyword.operator.ogw
+
+  numbers:
+    - match: '\b((0(x|X)[0-9a-fA-F]*(\.[0-9a-fA-F]+p-?\d+)?)|(([0-9]+\.?[0-9]*)|(\.[0-9]+))((e|E)(\+|-)?[0-9]+)?)(L|l|UL|ul|u|U|F|f|ll|LL|ull|ULL)?\b'
+      scope: constant.numeric.c
+
+  comments:
+    - meta_scope: comment.line.double-slash.ogw
+    - match: '(\\)$\n'
+      captures:
+        1: punctuation.separator.continuation.ogw
+    - match: \n
+      pop: true
+
+  double_quoted_string:
+    - meta_scope: string.quoted.double.ogw
+    - match: '\\.'
+      scope: constant.character.escape.ogw
+    - match: '"'
+      scope: punctuation.definition.string.end.ogw
+      pop: true
+
+  line_comment:
+    - meta_scope: comment.line.ogw
+    - match: $
+      pop: true
