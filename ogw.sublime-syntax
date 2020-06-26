@@ -26,10 +26,10 @@ contexts:
       scope: keyword.control.ogw
 
     - match: '\b(If|then|end|Main|Else|Elif|For|While|Do|Switch|Case|proc|declare|constant|storage)\b'
-      scope: keyword.control.extended.ogw
+      scope: keyword.control.ogw
 
     - match: '\b(coroutine|co_return|co_end)\b'
-      scope: constant.character.escape.ogw
+      scope: constant.language.ogw
 
     - match: '\b(randomseed|randomint|randomrange|randomint_31|randomreal|randomreal_2|randomreal_3|randomreal_53)\b'
       scope: entity.name.ogw
@@ -77,6 +77,8 @@ contexts:
     - match: '\b(-)?[0-9.]+\b'
       scope: constant.numeric.ogw
     - match: '\b(MaxNumber|MaxDecimal)\b'
+      scope: constant.numeric.ogw
+    - match: '\b(true|false|NULL)\b'
       scope: constant.numeric.ogw
 
     - match: '\b(BitField|Struct|Union|Typedef)\b'
